@@ -1,5 +1,6 @@
 package com.chekhovych.controller;
 
+import com.chekhovych.dto.PostDto;
 import com.chekhovych.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,11 +44,11 @@ public class FacebookController {
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public String savePost(@RequestBody com.chekhovych.model.Post post, Model model) {
-        postService.save(post);
+    public String savePost(@RequestBody PostDto dto, Model model) {
+        postService.save(dto);
         model.addAttribute("posts", postService.findAll());
 
-        return "tododododdod";// todo
+        return "hello";// todo
     }
 
     @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)
@@ -56,6 +57,6 @@ public class FacebookController {
         postService.delete(postId);
         model.addAttribute("posts", postService.findAll());
 
-        return "tododododdod";// todo
+        return "hello";// todo
     }
 }

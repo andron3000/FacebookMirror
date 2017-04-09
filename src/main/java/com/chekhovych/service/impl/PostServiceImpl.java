@@ -1,5 +1,6 @@
 package com.chekhovych.service.impl;
 
+import com.chekhovych.dto.PostDto;
 import com.chekhovych.model.Post;
 import com.chekhovych.repository.PostRepository;
 import com.chekhovych.service.PostService;
@@ -15,7 +16,14 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Override
-    public Post save(Post post) {
+    public Post save(PostDto postDto) {
+        Post post = new Post();
+
+        post.setMessage(postDto.message);
+        post.setPictureUrl(postDto.pictureUrl);
+        post.setStory(postDto.story);
+        post.setUserName(postDto.userName);
+
         return postRepository.save(post);
     }
 
