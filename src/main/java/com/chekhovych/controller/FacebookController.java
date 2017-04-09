@@ -1,5 +1,8 @@
 package com.chekhovych.controller;
 
+import com.chekhovych.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.PagedList;
@@ -7,11 +10,13 @@ import org.springframework.social.facebook.api.Post;
 import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class FacebookController {
+
+    @Autowired
+    private PostService postService;
 
     private Facebook facebook;
     private ConnectionRepository connectionRepository;
@@ -22,16 +27,35 @@ public class FacebookController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public String signInFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
             return "redirect:/connect/facebook";
         }
-        String [] fields = { "id", "email", "name", "first_name", "last_name"};
+        String[] fields = {"id", "email", "name", "first_name", "last_name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
         PagedList<Post> feed = facebook.feedOperations().getFeed();
         model.addAttribute("facebookProfile", userProfile);
         model.addAttribute("feed", feed);
 
         return "hello";
+    }
+
+    @RequestMapping(value = "/posts", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String savePost(@RequestBody com.chekhovych.model.Post post, Model model) {
+        postService.save(post);
+        model.addAttribute("posts", postService.findAll());
+
+        return "tododododdod";// todo
+    }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String deletePost(@PathVariable("postId") Long postId, Model model) {
+        postService.delete(postId);
+        model.addAttribute("posts", postService.findAll());
+
+        return "tododododdod";// todo
     }
 }
