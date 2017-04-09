@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello Facebook</title>
+</head>
+<body style="text-align:center">
+<h3>Hello, <span th:text="${facebookProfile.name}">Some User</span>!</h3>
+
+<h4>Here is your feed:</h4>
+
+<div th:each="post:${feed}">
+
+    <p th:text="${post.message}">message text</p>
+
+    <p th:text="${post.story}"></p>
+
+    <img th:if="${post.picture}" th:src="${post.picture}"> </img>
+</div>
+
+<form action="/connect/facebook" method="post">
+    <div class="formInfo">
+        <p>
+        <h5>
+            Spring Social Showcase is connected to your Facebook account.
+        </h5>
+        </p>
+    </div>
+    <button type="submit">Disconnect</button>
+    <input type="hidden" name="_method" value="delete"/>
+</form>
+</body>
+</html>
