@@ -14,9 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Api(basePath = "api/facebook", value = "/api/facebook", description = "Facebook Controller")
-@Controller(value = "api/facebook")
+import static com.chekhovych.controller.FacebookController.PATH;
+
+@Api(basePath = PATH, value = PATH, description = "Facebook Controller")
+@Controller(value = PATH)
 public class FacebookController {
+    static final String PATH = "api/facebook";
 
     @Autowired
     private PostService postService;

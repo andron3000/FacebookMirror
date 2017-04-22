@@ -1,4 +1,4 @@
-package com.chekhovych;
+package com.chekhovych.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,7 @@ public class SwaggerConfig {
     private static final String TITLE = "Facebook Mirror API";
     private static final String VERSION = "1.0";
     private static final String CONTACT = "andrii.chekhovych@gmail.com";
+    private static final String PATH = "api/facebook";
 
     @Bean
     public Docket userApi() {
@@ -23,7 +24,7 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
-                .build().pathMapping("api/facebook")
+                .build().pathMapping(PATH)
                 .apiInfo(apiInfo());
     }
 
