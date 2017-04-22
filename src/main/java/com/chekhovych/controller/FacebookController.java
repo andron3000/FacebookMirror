@@ -2,6 +2,7 @@ package com.chekhovych.controller;
 
 import com.chekhovych.dto.PostDto;
 import com.chekhovych.service.PostService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.social.connect.ConnectionRepository;
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Api(basePath = "api/facebook", value = "/api/facebook", description = "Facebook Controller")
+@Controller(value = "api/facebook")
 public class FacebookController {
 
     @Autowired
@@ -27,7 +29,7 @@ public class FacebookController {
         this.connectionRepository = connectionRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String signInFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
