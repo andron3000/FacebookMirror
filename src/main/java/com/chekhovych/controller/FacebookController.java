@@ -31,7 +31,7 @@ public class FacebookController {
     @ResponseStatus(HttpStatus.OK)
     public String signInFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
-            return "redirect:/connect/facebook";
+            return "/connect/facebookConnect";
         }
         String[] fields = {"id", "email", "name", "first_name", "last_name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
