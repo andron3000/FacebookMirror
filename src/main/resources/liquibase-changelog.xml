@@ -8,13 +8,13 @@
 
     <changeSet id="1" author="andriy.chekhovych">
         <createTable tableName="post">
-            <column name="post_id" type="int">
+            <column name="post_id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="message" type="varchar(50)"/>
-            <column name="picture_url" type="varchar(100)"/>
-            <column name="story" type="varchar(50)"/>
-            <column name="user_name" type="varchar(100)"/>
+            <column name="message" type="nvarchar(100)"/>
+            <column name="picture_url" type="nvarchar(300)"/>
+            <column name="story" type="nvarchar(500)"/>
+            <column name="user_name" type="nvarchar(200)"/>
         </createTable>
     </changeSet>
 

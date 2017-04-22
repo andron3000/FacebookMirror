@@ -40,9 +40,10 @@ public class FacebookController {
         }
         String[] fields = {"id", "email", "name", "first_name", "last_name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
-        PagedList<Post> feed = facebook.feedOperations().getFeed();
+        PagedList<Post> feeds = facebook.feedOperations().getFeed();
+        postService.saveAll(PostDto.convertAll(feeds, userProfile));
         model.addAttribute("facebookProfile", userProfile);
-        model.addAttribute("feed", feed);
+        model.addAttribute("feeds", feeds);
 
         return "hello";
     }

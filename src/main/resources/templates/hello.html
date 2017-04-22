@@ -7,7 +7,7 @@
 
 <h4>Here is your feed:</h4>
 
-<div th:each="post:${feed}">
+<div th:each="post:${feeds}">
 
     <p th:text="${post.message}">message text</p>
 
@@ -27,5 +27,12 @@
     <button type="submit">Disconnect</button>
     <input type="hidden" name="_method" value="delete"/>
 </form>
+
+<form action="/api/facebook/posts" method="post">
+    <button type="submit">Create a new post</button>
+    <input type="hidden" name="_method" value="save"/>
+</form>
+
+
 </body>
 </html>

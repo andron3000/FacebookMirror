@@ -7,6 +7,7 @@ import com.chekhovych.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,10 +22,27 @@ public class PostServiceImpl implements PostService {
 
         post.setMessage(postDto.message);
         post.setPictureUrl(postDto.pictureUrl);
+        if(postDto.story == null){
+            postDto.story = "";
+        }
         post.setStory(postDto.story);
         post.setUserName(postDto.userName);
 
-        return postRepository.save(post);
+        if (postRepository.findByStory(postDto.story).size() < 1) {
+            return postRepository.save(post);
+        }
+
+        return postRepository.findByStory(postDto.story).get(0);
+    }
+
+    @Override
+    public List<Post> saveAll(List<PostDto> postDtoList) {
+        List<Post> posts = new ArrayList<>();
+
+        for (PostDto dto : postDtoList) {
+            posts.add(save(dto));
+        }
+        return posts;
     }
 
     @Override

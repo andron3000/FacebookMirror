@@ -9,6 +9,8 @@ public interface PostService {
 
     Post save(PostDto postDto);
 
+    List<Post> saveAll(List<PostDto> postDtoList);
+
     List<Post> findAll();
 
     void delete(Long postId);
