@@ -13,6 +13,7 @@ import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.chekhovych.controller.FacebookController.PATH;
 
@@ -48,13 +49,31 @@ public class FacebookController {
         return "hello";
     }
 
+    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addPost() {;
+        return "addpost";
+    }
+
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public String savePost(@RequestBody PostDto dto, Model model) {
+    public String savePost(
+            @RequestParam("username") String username,
+            @RequestParam("message") String message,
+            @RequestParam("story") String story,
+            @RequestParam("image") MultipartFile image,
+            Model model) {
+
+        PostDto dto = new PostDto();
+        dto.userName = username;
+        dto.message = message;
+        dto.story = story;
+        dto.pictureUrl = image.getOriginalFilename();
+
         postService.save(dto);
         model.addAttribute("posts", postService.findAll());
 
-        return "hello";// todo
+        return "success";
     }
 
     @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)

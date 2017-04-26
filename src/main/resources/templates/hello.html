@@ -16,23 +16,15 @@
     <img th:if="${post.picture}" th:src="${post.picture}"> </img>
 </div>
 
-<form action="/api/facebook/connect/facebook" method="post">
-    <div class="formInfo">
-        <p>
-        <h5>
-            Spring Social Showcase is connected to your Facebook account.
-        </h5>
-        </p>
-    </div>
-    <button type="submit">Disconnect</button>
-    <input type="hidden" name="_method" value="delete"/>
-</form>
-
-<form action="/api/facebook/posts" method="post">
+<form action="/api/facebook/posts" method="get">
     <button type="submit">Create a new post</button>
     <input type="hidden" name="_method" value="save"/>
 </form>
 
+<form action="/api/facebook/connect/facebook" method="post">
+    <button type="submit">Disconnect</button>
+    <input type="hidden" name="_method" value="delete"/>
+</form>
 
 </body>
 </html>

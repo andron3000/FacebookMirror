@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+    <meta charset="utf-8" />
+    <!--<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />-->
+    <style>
+        body {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+<h1>Add new post</h1>
+
+<form th:action="@{/posts}" enctype="multipart/form-data" method="post">
+    <label for="username">User name</label>:
+    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+    <label for="message">Message</label>:
+    <input type="text" id="message" name="message" /> <br />
+    <label for="story">Story</label>:
+    <input type="text" id="story" name="story" /> <br />
+    <label for="image">Picture URL</label>:
+    <input type="file" id="image" name="image" /> <br />
+    <input type="submit" value="save post" />
+</form>
+
+</body>
+</html>
