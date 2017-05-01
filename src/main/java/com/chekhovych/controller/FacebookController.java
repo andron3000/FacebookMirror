@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 import static com.chekhovych.controller.FacebookController.PATH;
 
 @Api(basePath = PATH, value = PATH, description = "Facebook Controller")
@@ -51,11 +54,18 @@ public class FacebookController {
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public String addPost() {;
+    public String allPosts(Model model) {
+        model.addAttribute("posts", postService.findAll());
+        return "success";
+    }
+
+    @RequestMapping(value = "/posts/create", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addPost() {
         return "addpost";
     }
 
-    @RequestMapping(value = "/posts", method = RequestMethod.POST)
+    @RequestMapping(value = "/posts/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public String savePost(
             @RequestParam("username") String username,
@@ -78,10 +88,9 @@ public class FacebookController {
 
     @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deletePost(@PathVariable("postId") Long postId, Model model) {
+    public void deletePost(@PathVariable("postId") Long postId,
+                           HttpServletResponse response) throws IOException {
         postService.delete(postId);
-        model.addAttribute("posts", postService.findAll());
-
-        return "hello";// todo
+        response.sendRedirect("/api/facebook/posts");
     }
 }

@@ -8,20 +8,24 @@
         body {
             font-size: 1em;
         }
+        label,input {
+            display: inline-block !important;
+            width: 180px !important;
+        }
     </style>
 </head>
-<body>
+<body style="text-align:center">
 <h1>Add new post</h1>
 
-<form th:action="@{/posts}" enctype="multipart/form-data" method="post">
-    <label for="username">User name</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="message">Message</label>:
-    <input type="text" id="message" name="message" /> <br />
-    <label for="story">Story</label>:
-    <input type="text" id="story" name="story" /> <br />
-    <label for="image">Picture URL</label>:
-    <input type="file" id="image" name="image" /> <br />
+<form th:action="@{/posts/create}" enctype="multipart/form-data" method="post">
+    <label for="username">User name</label>
+    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />  <br />
+    <label for="message">Message</label>
+    <input type="text" id="message" name="message" /> <br />  <br />
+    <label for="story">Story</label>
+    <input type="text" id="story" name="story" /> <br />  <br />
+    <label for="image">Picture URL</label>
+    <input type="file" id="image" name="image" /> <br />  <br />
     <input type="submit" value="save post" />
 </form>
 

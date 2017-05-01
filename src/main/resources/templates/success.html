@@ -7,8 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-<h1>Success !!!</h1>
+<body style="text-align:center">
+<h1>All posts</h1>
 
 <div class="container">
     <table class="table">
@@ -25,11 +25,23 @@
             <tr th:each="post:${posts}">
                 <td th:text="${post.id}"></td>
                 <td th:text="${post.story}"></td>
+                <td>
+                    <form th:action ="@{'/posts/' + ${post.id}}"  th:method="delete">
+                        <button class="glyphicon glyphicon-remove glyphicon-red" style="color:red"> </button>
+                        <input type="hidden" name="_method" value="delete"/>
+                    </form>
+                </td>
             </tr>
 
         </tbody>
     </table>
 </div>
+
+<br/>
+<form th:align="center" action="/api/facebook/connect/facebook" method="post">
+    <button type="submit">Disconnect</button>
+    <input type="hidden" name="_method" value="delete"/>
+</form>
 
 </body>
 </html>
