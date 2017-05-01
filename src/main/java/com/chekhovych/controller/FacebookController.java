@@ -1,6 +1,7 @@
 package com.chekhovych.controller;
 
 import com.chekhovych.dto.PostDto;
+import com.chekhovych.service.GmailService;
 import com.chekhovych.service.PostService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class FacebookController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private GmailService gmailService;
 
     private Facebook facebook;
     private ConnectionRepository connectionRepository;
@@ -91,6 +95,7 @@ public class FacebookController {
     public void deletePost(@PathVariable("postId") Long postId,
                            HttpServletResponse response) throws IOException {
         postService.delete(postId);
+        gmailService.sendEmail(String.format("Post with id = %d, was successfully deleted !!!", postId));
         response.sendRedirect("/api/facebook/posts");
     }
 }
