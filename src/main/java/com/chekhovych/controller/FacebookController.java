@@ -19,12 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.chekhovych.controller.FacebookController.PATH;
-
 @Api(description = "Facebook Controller")
 @Controller
 public class FacebookController {
-    static final String PATH = "/";
 
     @Autowired
     private PostService postService;
@@ -40,26 +37,10 @@ public class FacebookController {
         this.connectionRepository = connectionRepository;
     }
     
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value ={"/", "/login"}, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public String index(Model model) {
+    public String login(Model model) {
        if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
-            return "connect/facebookConnect";
-        }
-        String[] fields = {"id", "email", "name", "first_name", "last_name"};
-        User userProfile = facebook.fetchObject("me", User.class, fields);
-        PagedList<Post> feeds = facebook.feedOperations().getFeed();
-        postService.saveAll(PostDto.convertAll(feeds, userProfile));
-        model.addAttribute("facebookProfile", userProfile);
-        model.addAttribute("feeds", feeds);
-
-        return "hello";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String signInFacebook(Model model) {
-        if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
             return "connect/facebookConnect";
         }
         String[] fields = {"id", "email", "name", "first_name", "last_name"};
@@ -101,6 +82,33 @@ public class FacebookController {
         dto.pictureUrl = image.getOriginalFilename();
 
         postService.save(dto);
+        model.addAttribute("posts", postService.findAll());
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String updatePost(@PathVariable("postId") Long postId,
+                             Model model) {
+        com.chekhovych.model.Post post = postService.findOne(postId);
+        model.addAttribute("post", post);
+        return "editpost";
+    }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public String editPost(@PathVariable("postId") Long postId,
+                           @RequestParam("username") String username,
+                           @RequestParam("story") String story,
+                           Model model) throws IOException {
+        com.chekhovych.model.Post post = postService.findOne(postId);
+
+        post.setUserName(username);
+        post.setStory(story);
+        postService.save(post);
+
+        postService.findAll();
         model.addAttribute("posts", postService.findAll());
 
         return "success";

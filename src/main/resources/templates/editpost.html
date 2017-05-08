@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+    <meta charset="utf-8" />
+    <!--<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />-->
+    <style>
+        body {
+            font-size: 1em;
+        }
+        label,input {
+            display: inline-block !important;
+            width: 180px !important;
+        }
+    </style>
+</head>
+<body style="text-align:center">
+<h1>Edit post</h1>
+
+<form th:action ="@{'/posts/' + ${post.id}}" enctype="multipart/form-data" th:method="put">
+    <label for="username">User name</label>
+    <input type="text" id="username" name="username" autofocus="autofocus" th:value="${post.userName}"/> <br />  <br />
+    <label for="story">Story</label>
+    <input type="text" id="story" name="story" th:value="${post.story}"/> <br />  <br />
+    <input type="submit" value="edit post" />
+</form>
+
+</body>
+</html>

@@ -36,6 +36,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post save(Post post) {
+        return postRepository.save(post);
+    }
+
+    @Override
     public List<Post> saveAll(List<PostDto> postDtoList) {
         List<Post> posts = new ArrayList<>();
 
@@ -48,6 +53,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> findAll() {
         return (List<Post>) postRepository.findAll();
+    }
+
+    @Override
+    public Post findOne(Long id) {
+        return postRepository.findOne(id);
     }
 
     @Override

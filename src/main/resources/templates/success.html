@@ -15,7 +15,8 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Post</th>
+            <th style="text-align: center">Post</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
@@ -25,6 +26,12 @@
             <tr th:each="post:${posts}">
                 <td th:text="${post.id}"></td>
                 <td th:text="${post.story}"></td>
+                <td>
+                    <form th:action ="@{'/posts/' + ${post.id}}"  th:method="get">
+                        <button class="glyphicon glyphicon-edit" style="color:dodgerblue"> </button>
+                        <input type="hidden" name="_method" value="edit"/>
+                    </form>
+                </td>
                 <td>
                     <form th:action ="@{'/posts/' + ${post.id}}"  th:method="delete">
                         <button class="glyphicon glyphicon-remove glyphicon-red" style="color:red"> </button>
