@@ -24,7 +24,7 @@ import static com.chekhovych.controller.FacebookController.PATH;
 @Api(basePath = "/", value = "/", description = "Facebook Controller")
 @Controller(value = "/")
 public class FacebookController {
-    //static final String PATH = "api/facebook";
+    static final String PATH = "/";
 
     @Autowired
     private PostService postService;
@@ -38,6 +38,22 @@ public class FacebookController {
     public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
         this.facebook = facebook;
         this.connectionRepository = connectionRepository;
+    }
+    
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public String index(Model model) {
+       if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
+            return "/connect/facebookConnect";
+        }
+        String[] fields = {"id", "email", "name", "first_name", "last_name"};
+        User userProfile = facebook.fetchObject("me", User.class, fields);
+        PagedList<Post> feeds = facebook.feedOperations().getFeed();
+        postService.saveAll(PostDto.convertAll(feeds, userProfile));
+        model.addAttribute("facebookProfile", userProfile);
+        model.addAttribute("feeds", feeds);
+
+        return "hello";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
