@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Post implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
 
