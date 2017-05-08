@@ -16,17 +16,17 @@
     <img th:if="${post.picture}" th:src="${post.picture}"> </img>
 </div>
 
-<form action="/api/facebook/posts/create" method="get">
+<form action="/posts/create" method="get">
     <button type="submit">Create a new post</button>
     <input type="hidden" name="_method" value="save"/>
 </form>
 
-<form action="/api/facebook/posts" method="get">
+<form action="/posts" method="get">
     <button type="submit">Show all post</button>
     <input type="hidden" name="_method" value="getAll"/>
 </form>
 
-<form action="/api/facebook/connect/facebook" method="post">
+<form action="/connect/facebook" method="post">
     <button type="submit">Disconnect</button>
     <input type="hidden" name="_method" value="delete"/>
 </form>
