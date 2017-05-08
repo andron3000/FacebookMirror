@@ -21,10 +21,10 @@ import java.io.IOException;
 
 import static com.chekhovych.controller.FacebookController.PATH;
 
-@Api(basePath = PATH, value = PATH, description = "Facebook Controller")
-@Controller(value = PATH)
+@Api(basePath = "/", value = "/", description = "Facebook Controller")
+@Controller(value = "/")
 public class FacebookController {
-    static final String PATH = "api/facebook";
+    //static final String PATH = "api/facebook";
 
     @Autowired
     private PostService postService;
