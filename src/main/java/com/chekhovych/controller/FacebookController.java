@@ -21,8 +21,8 @@ import java.io.IOException;
 
 import static com.chekhovych.controller.FacebookController.PATH;
 
-@Api(basePath = "/", value = "/", description = "Facebook Controller")
-@Controller(value = "/")
+@Api(description = "Facebook Controller")
+@Controller
 public class FacebookController {
     static final String PATH = "/";
 
@@ -40,11 +40,11 @@ public class FacebookController {
         this.connectionRepository = connectionRepository;
     }
     
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String index(Model model) {
        if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
-            return "/connect/facebookConnect";
+            return "connect/facebookConnect";
         }
         String[] fields = {"id", "email", "name", "first_name", "last_name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
@@ -60,7 +60,7 @@ public class FacebookController {
     @ResponseStatus(HttpStatus.OK)
     public String signInFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
-            return "/connect/facebookConnect";
+            return "connect/facebookConnect";
         }
         String[] fields = {"id", "email", "name", "first_name", "last_name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
