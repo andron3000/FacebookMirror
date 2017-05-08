@@ -112,6 +112,6 @@ public class FacebookController {
                            HttpServletResponse response) throws IOException {
         postService.delete(postId);
         gmailService.sendEmail(String.format("Post with id = %d, was successfully deleted !!!", postId));
-        response.sendRedirect("/api/facebook/posts");
+        response.sendRedirect("/posts");
     }
 }
